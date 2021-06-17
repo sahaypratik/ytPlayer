@@ -21,12 +21,13 @@ class MainActivity : AppCompatActivity() {
 
         youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                val customPlayerUiController = CustomPlayerUiController(
-                    this@MainActivity,
-                    customPlayerUi,
-                    youTubePlayer,
-                    youTubePlayerView
-                )
+                val customPlayerUiController =
+                    CustomPlayerUiController(
+                        this@MainActivity,
+                        customPlayerUi,
+                        youTubePlayer,
+                        youTubePlayerView
+                    )
                 youTubePlayer.addListener(customPlayerUiController)
                 youTubePlayerView.addFullScreenListener(customPlayerUiController)
                 youTubePlayer.loadOrCueVideo(lifecycle, "yabDCV4ccQs", 0f)

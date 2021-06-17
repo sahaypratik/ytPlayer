@@ -1,7 +1,9 @@
 package com.example.customremoteytlib;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,7 +22,9 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.utils.FadeViewHelper;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar;
 
-class CustomPlayerUiController extends AbstractYouTubePlayerListener implements YouTubePlayerFullScreenListener {
+import java.util.ArrayList;
+
+public class CustomPlayerUiController extends AbstractYouTubePlayerListener implements YouTubePlayerFullScreenListener {
 
     private final View playerUi;
 
@@ -37,12 +41,13 @@ class CustomPlayerUiController extends AbstractYouTubePlayerListener implements 
     private TextView videoCurrentTimeTextView;
     private TextView videoDurationTextView;
     private LinearLayout llControls;
-    private TextView rev;
-    private TextView ff;
+    private ImageView rev;
+    private ImageView ff;
+    private ImageView exo_speed;
     private Float currentDuration=0f;
     private final YouTubePlayerTracker playerTracker;
     private boolean fullscreen = false;
-
+    private int selectedSpeed=0;
 
     CustomPlayerUiController(Context context, View customPlayerUi, YouTubePlayer youTubePlayer, YouTubePlayerView youTubePlayerView) {
         this.playerUi = customPlayerUi;
@@ -66,8 +71,9 @@ class CustomPlayerUiController extends AbstractYouTubePlayerListener implements 
         rev=playerUi.findViewById(R.id.rev);
         ff=playerUi.findViewById(R.id.ff);
         llControls=playerUi.findViewById(R.id.llControls);
+        exo_speed=playerUi.findViewById(R.id.exo_speed);
 
-        TextView playPauseButton = playerUi.findViewById(R.id.play);
+        ImageView playPauseButton = playerUi.findViewById(R.id.play);
         ImageView enterExitFullscreenButton = playerUi.findViewById(R.id.imgFullscreen);
         FadeViewHelper fadeViewHelper = new FadeViewHelper(llControls);
         fadeViewHelper.setAnimationDuration(FadeViewHelper.DEFAULT_ANIMATION_DURATION);
@@ -86,11 +92,74 @@ class CustomPlayerUiController extends AbstractYouTubePlayerListener implements 
 
         });
 
+        exo_speed.setOnClickListener((view)->{
+           String[] speed = new String[]{ "0.25x", "0.5x", "Normal", "1.5x", "2x" };
+
+           new AlertDialog.Builder(context)
+                   .setTitle("Select playback speed")
+                   .setSingleChoiceItems(speed, selectedSpeed, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                           selectedSpeed=which;
+                            switch (selectedSpeed)
+                            {
+                                case 0:{
+                                    youTubePlayer.playbackRate(0.25f);
+                                    break;
+                                }
+                                case 1:{
+                                    youTubePlayer.playbackRate(0.5f);
+                                    break;
+                                }
+                                case 3:{
+                                    youTubePlayer.playbackRate(1.5f);
+                                    break;
+                                }
+                                case 4:{
+                                    youTubePlayer.playbackRate(2f);
+                                    break;
+                                }
+                                default:{
+                                    youTubePlayer.playbackRate(1f);
+                                    break;
+                                }
+                            }
+                            dialog.dismiss();
+                       }
+                   })
+           .show();
+           /* AlertDialog.Builder(context)
+                    .setTitle("Select playback speed")
+                    .setSingleChoiceItems(speed, 1) { dialog, i ->
+                    selectedAspectRatio = i
+                when(selectedAspectRatio)
+                {
+                    0->{
+                    mExoPlayerView!!.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT)
+                }
+                    1->{
+                    mExoPlayerView!!.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL)
+                }
+                    2->{
+                    mExoPlayerView!!.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM)
+                }
+                }
+                dialog.dismiss()
+            }
+                .show()*/
+        });
+
         playPauseButton.setOnClickListener( (view) -> {
             // if(playerTracker.getState() == PlayerConstants.PlayerState.PLAYING) youTubePlayer.pause();
             //youTubePlayer.playbackRate(0.25f);
-            if(playerTracker.getState() == PlayerConstants.PlayerState.PLAYING) youTubePlayer.pause();
-            else youTubePlayer.play();
+            if(playerTracker.getState() == PlayerConstants.PlayerState.PLAYING) {
+                youTubePlayer.pause();
+                playPauseButton.setImageDrawable(context.getDrawable(R.drawable.ayp_ic_play_36dp));
+            }
+            else{
+                youTubePlayer.play();
+                playPauseButton.setImageDrawable(context.getDrawable(R.drawable.ic_pause_black_24dp));
+            }
         });
 
         enterExitFullscreenButton.setOnClickListener( (view) -> {
