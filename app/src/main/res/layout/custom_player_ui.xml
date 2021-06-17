@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/text_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="custom Ui example"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/video_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/ayp_red"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/video_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/ayp_red"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/play_pause_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play/Pause"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/enter_exit_fullscreen_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter/exit fullscreen"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:id="@+id/rlSeek"
+        >
+        <ImageView
+            android:id="@+id/imgFullscreen"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ayp_ic_fullscreen_24dp"
+            android:scaleType="fitXY"
+            android:layout_alignParentEnd="true"/>
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar
+            android:layout_toLeftOf="@+id/imgFullscreen"
+            android:id="@+id/youtube_player_seekbar_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:fontSize="12sp"
+            app:color="@color/ayp_red"
+            android:maxHeight="100dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/rlSeek"
+        android:orientation="horizontal"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/rev"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:text="rev"
+            android:textColor="#FFFFFF"
+             />
+
+        <TextView
+            android:id="@+id/play"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginHorizontal="25dp"
+            android:text="PLay"
+            android:textColor="#FFFFFF"
+             />
+
+        <TextView
+            android:id="@+id/ff"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:text="FF"
+            android:textColor="#FFFFFF"
+             />
+
+        <ImageButton
+            android:id="@+id/exo_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00000000"
+             />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/wholeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llControls"/>
+
+</RelativeLayout>
